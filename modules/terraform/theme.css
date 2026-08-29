@@ -1,0 +1,82 @@
+:root {
+  --paper: #F5F2EE;
+  --ink: #17141F;
+  --sub: #4c4658;
+  --faint: #8d879b;
+  --accent: #7B42BC;
+  --tfp: #7B42BC;
+}
+.lede code { background: var(--ink); color: #d9b8ff; padding: 2px 8px; border-radius: 6px; font-size: .82em; }
+.coach { background: #F3EAFF; }
+.coach code { color: #d9b8ff; }
+.cc.copied { background: #F3EAFF; }
+.term { background: #17141F; }
+.term .bar { background: #241f30; }
+.term .bar span { color: #8b83a0; }
+.tout { color: #e7e1f2; }
+.tout::-webkit-scrollbar-thumb { background: #3a3350; }
+.c-cy { color: #c79bff; }
+.tinrow { background: #0f0c16; }
+.tinrow .pr { color: #c79bff; }
+.tinrow input { caret-color: #c79bff; }
+.tinrow input::placeholder { color: #4d4463; }
+.chips { background: #0f0c16; }
+.chip { border-color: #3a3350; background: #1d1828; color: #a89fc0; }
+.chip:hover { border-color: #c79bff; }
+.state h4 em { color: var(--accent); }
+.act.tfgo { background: var(--accent); color: #fff; }
+.gitstrip { color: #e9e4f2; }
+.gitstrip span { color: #a89fc0; }
+
+.res {
+  display: flex; align-items: center; gap: 11px;
+  border: 2px solid var(--ink); border-radius: 11px;
+  padding: 10px 13px; background: #fff;
+  animation: popin .4s cubic-bezier(.2, 1.5, .4, 1); box-shadow: 3px 3px 0 var(--ink);
+}
+.res .ico {
+  width: 34px; height: 34px; border: 2px solid var(--ink); border-radius: 9px;
+  display: grid; place-items: center; font-size: 16px; flex: none;
+}
+.res b { font-family: var(--mono); font-size: 12px; }
+.res small { display: block; font-family: var(--mono); font-size: 10px; color: var(--faint); }
+.res .st {
+  margin-left: auto; font-family: var(--mono); font-size: 9.5px; font-weight: 700;
+  border: 2px solid var(--ink); border-radius: 6px; padding: 2px 7px;
+  background: #E7F6EA; color: var(--green);
+}
+.statefile { font-family: var(--mono); font-size: 10.5px; color: var(--faint); border-top: 2px dashed #ddd6cc; padding-top: 10px; }
+.statefile b { color: var(--accent); }
+
+.hclbox { border: 2.5px solid var(--ink); border-radius: 16px; overflow: hidden; background: #17141F; box-shadow: 7px 7px 0 var(--ink); display: flex; flex-direction: column; }
+.hcl { padding: 14px 18px; font-family: var(--mono); font-size: 12px; line-height: 1.7; white-space: pre; overflow-x: auto; color: #e7e1f2; flex: 1; }
+.hcl .k { color: #c79bff; }
+.hcl .s { color: #ffd166; }
+.hcl .cm { color: #5b5273; }
+.hcl .fn { color: #6fd3ff; }
+.hcl .mut { border-radius: 6px; padding: 0 4px; margin: 0 -4px; transition: .3s; }
+.hcl .mut.add { background: #12301f; color: #5ff0a0; }
+.hcl .mut.chg { background: #332a10; }
+.hcl .mut.del { background: #361713; text-decoration: line-through; opacity: .7; }
+.toggles { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-top: 2px solid #000; background: #0f0c16; }
+.tgl {
+  display: flex; align-items: center; gap: 11px; font-family: var(--mono); font-size: 12px;
+  color: #a89fc0; border: 1.5px solid #3a3350; border-radius: 10px;
+  padding: 9px 13px; background: #1d1828; transition: .15s; text-align: left;
+}
+.tgl:hover { border-color: #c79bff; }
+.tgl.onn { border-color: var(--yellow); color: #fff; background: #241f30; }
+.tgl .sw { width: 34px; height: 18px; border-radius: 10px; border: 2px solid #4d4463; position: relative; flex: none; transition: .2s; }
+.tgl .sw::after { content: ""; position: absolute; top: 1px; left: 1px; width: 10px; height: 10px; border-radius: 50%; background: #78708e; transition: .2s; }
+.tgl.onn .sw { border-color: var(--yellow); }
+.tgl.onn .sw::after { left: 17px; background: var(--yellow); }
+.planviz { border: 2.5px solid var(--ink); border-radius: 16px; background: #fff; box-shadow: 7px 7px 0 var(--ink); padding: 20px; display: flex; flex-direction: column; }
+.planviz h4 { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
+.planout {
+  flex: 1; font-family: var(--mono); font-size: 11.5px; line-height: 1.75;
+  background: #17141F; border: 2px solid var(--ink); border-radius: 11px;
+  padding: 13px 15px; margin: 12px 0; color: #a89fc0; overflow-y: auto;
+  min-height: 190px; white-space: pre-wrap;
+}
+.ops .crate pre { color: #c79bff; }
+.ops .crate pre em { color: #6a6180; }

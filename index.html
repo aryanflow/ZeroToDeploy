@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZeroToDeploy — Learn DevOps by Clicking</title>
+<meta name="description" content="Interactive, zero-risk DevOps tutorials. One idea per slide, simulated terminals, nothing breaks.">
+<link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/hub.css">
+</head>
+<body>
+
+<header id="top">
+ <a href="index.html" class="logo"><img src="assets/brand/logo.svg" alt="" class="logo-mark" width="28" height="28">ZERO TO DEPLOY</a>
+ <span class="topmeta" id="live-count">— modules live</span>
+</header>
+
+<main class="wrap">
+
+<section class="hero">
+ <div class="stencil"><b></b>Interactive · Zero risk · ~15 min each</div>
+ <h1 class="mega">
+  <span class="z">Zero</span><span class="arrow">→</span><span class="hl">Deploy.</span>
+ </h1>
+ <p class="hero-lede">
+  A growing deck of <b>interactive tutorials</b> for the tools between your laptop and production.
+  One idea per slide, simulated terminals, nothing touches real infrastructure.
+  <b>Learn by clicking — not by scrolling.</b>
+ </p>
+
+ <div class="pipeline" id="pipeline" aria-label="Learning path">
+  <div class="t">Recommended path · left to right</div>
+ </div>
+
+ <div class="stats" id="stats"></div>
+</section>
+
+<section aria-labelledby="modules-heading">
+ <div class="sechead">
+  <h2 id="modules-heading">The Deck</h2>
+  <p>Each module lives in <code>modules/</code>. Open it, click through, leave with a working mental model.</p>
+ </div>
+ <div class="grid" id="modules"></div>
+</section>
+
+<section class="manifest" aria-labelledby="manifest-heading">
+ <div class="t">For authors · add a module in 30 seconds</div>
+ <h3 id="manifest-heading">Copy a folder. Edit one array.</h3>
+ <p>
+  Duplicate an existing module under <code style="color:#ffd166">modules/</code>, then append an entry to
+  <code style="color:#ffd166">assets/js/modules.js</code>. The hub picks it up automatically.
+ </p>
+ <pre><span class="cm">// assets/js/modules.js</span>
+{
+  <span class="kw">id</span>: <span class="str">'k8s'</span>,
+  <span class="kw">codename</span>: <span class="str">'BRIDGE'</span>,
+  <span class="kw">title</span>: <span class="str">'Kubernetes'</span>,
+  <span class="kw">path</span>: <span class="str">'modules/kubernetes/index.html'</span>,
+  <span class="kw">color</span>: <span class="str">'#326CE5'</span>,
+  <span class="kw">desc</span>: <span class="str">'Pods, services, deploy — the cluster mental model.'</span>,
+  <span class="kw">slides</span>: <span class="str">10</span>, <span class="kw">minutes</span>: <span class="str">15</span>,
+  <span class="kw">tags</span>: [<span class="str">'orchestration'</span>],
+  <span class="kw">order</span>: <span class="str">3</span>,
+  <span class="kw">status</span>: <span class="str">'live'</span>   <span class="cm">// or 'soon'</span>
+}</pre>
+</section>
+
+<footer>
+ <span>ZeroToDeploy · learn by clicking</span>
+ <span id="footer-ts"></span>
+</footer>
+
+</main>
+
+<script src="assets/js/modules.js"></script>
+<script src="assets/js/hub.js"></script>
+</body>
+</html>
