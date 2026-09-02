@@ -100,3 +100,6 @@
 .mergebar .led { width: 10px; height: 10px; border-radius: 50%; background: #ccc; border: 2px solid var(--ink); }
 .mergebar.ok { background: #E7F6EA; }
 .mergebar.ok .led { background: var(--green); }
+
+.setupbox a { color: var(--blue); font-weight: 700; }
+.setupbox code { font-size: 11px; background: #f0ece5; border: 1px solid #ddd6cc; padding: 1px 6px; border-radius: 5px; }

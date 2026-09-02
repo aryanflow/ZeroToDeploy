@@ -1,40 +1,26 @@
 const SLIDES=[
 
-/* 0 — cover */
-{label:'START HERE',color:'var(--k8s)',hint:'<b>Click Next</b> — or use your arrow keys. 10 slides, ~15 minutes.',html:`
- <div class="inner">
-  <h1 class="mega">Kubernetes,<br>learned by<br><span class="hl">clicking.</span></h1>
-  <p class="lede" style="margin-top:26px">Docker runs one box. Kubernetes runs <b>thousands</b> — and keeps them alive when servers die. No scrolling. No wall of text. One idea per slide, and when it's time to try — a <b>simulated kubectl terminal</b> opens right here. By the last slide you'll deploy, scale, expose and debug workloads. <b>Nothing can break your cluster.</b></p>
-  <div class="heroart">
-   <div class="hbox" style="background:var(--k8s);animation-delay:.05s">POD</div>
-   <div class="hbox" style="background:var(--blue);animation-delay:.15s">DEPLOY</div>
-   <div class="hbox" style="background:var(--green);animation-delay:.25s">SERVICE</div>
-   <div class="hbox" style="background:var(--yellow);color:var(--ink);animation-delay:.35s">SCALE</div>
-   <div class="hbox" style="background:var(--violet);animation-delay:.45s">kubectl</div>
-  </div>
- </div>`},
-
-/* 1 — the idea */
+/* 0: */
 {label:'CH 01 · THE IDEA',color:'var(--blue)',hint:'Skim the three crates. That is the entire mental model.',html:`
  <div class="inner">
   <h2 class="big">Kubernetes = a <em style="background:var(--k8s)">fleet manager</em> for containers</h2>
-  <p class="lede">You hand it a <b>desired state</b> — "run three copies of my app" — and it continuously fights reality until reality matches. When a pod dies, it spawns another. When traffic spikes, you scale. Only three words matter:</p>
+  <p class="lede">You hand it a <b>desired state</b>: "run three copies of my app": and it continuously fights reality until reality matches. When a pod dies, it spawns another. When traffic spikes, you scale. Only three words matter:</p>
   <div class="grid3">
-   <div class="crate"><span class="tag" style="background:var(--k8s)">SMALLEST UNIT</span><div class="bigico">🫛</div><h3>Pod</h3><div class="metaphor">one or few containers · ephemeral · disposable</div><p>The <b>atom</b> of Kubernetes. Usually one main container plus helpers. Gets its own IP — but that IP <b>dies with the pod</b>. Never address pods directly.</p></div>
+   <div class="crate"><span class="tag" style="background:var(--k8s)">SMALLEST UNIT</span><div class="bigico">🫛</div><h3>Pod</h3><div class="metaphor">one or few containers · ephemeral · disposable</div><p>The <b>atom</b> of Kubernetes. Usually one main container plus helpers. Gets its own IP: but that IP <b>dies with the pod</b>. Never address pods directly.</p></div>
    <div class="crate"><span class="tag" style="background:var(--blue)">THE BOSS</span><div class="bigico">📋</div><h3>Deployment</h3><div class="metaphor">declarative · self-healing · rolling updates</div><p>Says <b>"keep N replicas running"</b>. Creates and replaces pods for you. Change the image → rolling update. Crash a pod → new one in seconds.</p></div>
-   <div class="crate"><span class="tag" style="background:var(--green)">THE ADDRESS</span><div class="bigico">📡</div><h3>Service</h3><div class="metaphor">stable DNS · load-balances · ClusterIP</div><p>A <b>permanent name</b> that routes to whichever pods match right now. Your web app talks to <code style="font-size:11px">db</code> — not to a pod IP that changes every restart.</p></div>
+   <div class="crate"><span class="tag" style="background:var(--green)">THE ADDRESS</span><div class="bigico">📡</div><h3>Service</h3><div class="metaphor">stable DNS · load-balances · ClusterIP</div><p>A <b>permanent name</b> that routes to whichever pods match right now. Your web app talks to <code style="font-size:11px">db</code>: not to a pod IP that changes every restart.</p></div>
   </div>
   <div class="gitstrip">
-   <span class="t">You know Docker → you already know this</span>
+   <span class="t">Containers inside, orchestration outside</span>
    <span><b>Pod</b><i>≈</i>container (but managed)</span><span><b>Deployment</b><i>≈</i>docker compose + auto-heal</span><span><b>Service</b><i>≈</i>Compose network DNS</span><span><b>kubectl apply</b><i>≈</i>compose up</span>
   </div>
  </div>`},
 
-/* 2 — the flow */
-{label:'CH 01 · THE FLOW',color:'var(--blue)',hint:'One arrow to the next slide, where you type this yourself.',html:`
+/* 1: */
+{label:'CH 01 · THE LOOP',color:'var(--blue)',hint:'The apply→reconcile loop. Next slide: run it in the workbench.',html:`
  <div class="inner">
   <h2 class="big">You declare. <em style="background:var(--green)">The control plane delivers.</em></h2>
-  <p class="lede">Every Kubernetes workflow ever is this picture. You write YAML, kubectl sends it to the API server, controllers schedule pods on nodes. That's it — the rest is detail.</p>
+  <p class="lede">Every Kubernetes workflow ever is this picture. You write YAML, kubectl sends it to the API server, controllers schedule pods on nodes. That's it: the rest is detail.</p>
   <div class="flow">
    <div class="fbox"><div class="b">✍️</div><b>You</b><small>deployment.yaml</small></div>
    <div class="farr">kubectl apply<b>→</b></div>
@@ -50,44 +36,47 @@ const SLIDES=[
    <span class="cp">CONTROLLER</span><span class="arr">→</span>
    <span class="cp">KUBELET</span>
   </div>
-  <div class="coach" style="border-left-color:var(--k8s);margin-top:36px"><b>Next slide:</b> a live terminal. You'll apply a deployment and watch pods appear in the cluster panel — guided, step by step.</div>
  </div>`},
 
-/* 3 — playground 1 */
-{label:'CH 02 · PLAYGROUND',color:'var(--yellow)',hint:'Complete the 6 steps in the coach box, then hit Next.',html:`
- <div class="inner">
-  <h2 class="big">Type. <em style="background:var(--green)">Watch the cluster.</em></h2>
-  <div class="playwrap">
-   <div class="term">
-    <div class="bar"><i></i><i></i><i></i><span>bridge — simulated cluster · context: minikube</span></div>
-    <div class="tout" id="tout"></div>
-    <div class="tinrow"><span class="pr">$</span><input id="tin" placeholder="kubectl get pods" autocomplete="off" spellcheck="false" aria-label="terminal"></div>
-    <div class="chips" id="chips"></div>
-   </div>
-   <div class="state">
-    <h4>☸️ Cluster <em id="hbc"></em></h4>
-    <div class="clusterviz" id="cv"><span class="empty">No workloads yet — apply a deployment.</span></div>
-    <h4>📋 Resources</h4>
-    <div class="zone" id="dz"><div class="none">Empty namespace.</div></div>
-   </div>
+/* 2: */
+{label:'WORKBENCH',color:'var(--yellow)',hint:'Run commands from the last two slides. Tap RUN or type below.',workbench:true,terminal:true,html:`
+ <div class="workbench-head">
+  <h2 class="big">Kubernetes, learned by <em style="background:var(--k8s)">doing.</em></h2>
+  <p class="lede workbench-lede">You saw pods, deployments, and the control loop. Now run it: watch the cluster react.</p>
+ </div>
+ <div class="playwrap">
+  <div class="term">
+   <div class="bar"><i></i><i></i><i></i><span>bridge: simulated cluster · context: minikube</span></div>
+   <div class="tout" id="tout"></div>
+   <div class="tinrow"><span class="pr">$</span><input id="tin" placeholder="kubectl get pods" autocomplete="off" spellcheck="false" aria-label="terminal"></div>
+   <div class="chips" id="chips"></div>
   </div>
-  <div class="coach" id="coach" style="border-left-color:var(--k8s)"></div>
+  <div class="state">
+   <h4>☸️ Cluster <em id="hbc"></em></h4>
+   <div class="clusterviz" id="cv"><span class="empty">No workloads yet: apply a deployment.</span></div>
+   <h4>📋 Resources</h4>
+   <div class="zone" id="dz"><div class="none">Empty namespace.</div></div>
+  </div>
+ </div>
+ <div class="coach" id="coach" style="border-left-color:var(--k8s)"></div>
+ <div class="cheat-strip">
+  <div class="cheat-strip-title">Daily commands <span>tap RUN · typical order</span></div>
+  <div class="cheat workbench-cheat" id="cheat"></div>
  </div>`},
 
-/* 4 — pods concept */
+/* 3: */
 {label:'CH 03 · PODS',color:'var(--red)',hint:'Pods are cattle, not pets. Never pin to a pod IP.',html:`
  <div class="inner">
   <h2 class="big">Pods: <em style="background:var(--red)">ephemeral by design</em></h2>
-  <p class="lede">A pod wraps one or more containers that <b>share a network and storage</b>. Think of it as a tiny VM-lite — but disposable. Kubernetes treats pods as <b>cattle</b>: when one gets sick, delete it and let the Deployment birth a healthy replacement.</p>
+  <p class="lede">A pod wraps one or more containers that <b>share a network and storage</b>. Think of it as a tiny VM-lite: but disposable. Kubernetes treats pods as <b>cattle</b>: when one gets sick, delete it and let the Deployment birth a healthy replacement.</p>
   <div class="grid3" style="margin-top:26px">
    <div class="crate"><span class="tag" style="background:var(--red)">ONE OR FEW</span><h3 style="font-size:16px">Shared context</h3><p>Sidecar pattern: main app + log shipper in one pod. They share <code style="font-size:11px">localhost</code> and volumes. Most pods are just <b>one container</b>.</p></div>
-   <div class="crate"><span class="tag" style="background:var(--yellow);color:var(--ink)">EPHEMERAL</span><h3 style="font-size:16px">No immortality</h3><p>Restart = new pod = <b>new IP</b>. Never bookmark a pod address. That's why Services exist — stable front door, shifting pods behind it.</p></div>
-   <div class="crate"><span class="tag" style="background:var(--k8s)">LABELS</span><h3 style="font-size:16px">How things find each other</h3><p><code style="font-size:11px">app=web</code> on pods, <code style="font-size:11px">selector: app=web</code> on Services. Labels are the glue — Deployments stamp them, Services route by them.</p></div>
+   <div class="crate"><span class="tag" style="background:var(--yellow);color:var(--ink)">EPHEMERAL</span><h3 style="font-size:16px">No immortality</h3><p>Restart = new pod = <b>new IP</b>. Never bookmark a pod address. That's why Services exist: stable front door, shifting pods behind it.</p></div>
+   <div class="crate"><span class="tag" style="background:var(--k8s)">LABELS</span><h3 style="font-size:16px">How things find each other</h3><p><code style="font-size:11px">app=web</code> on pods, <code style="font-size:11px">selector: app=web</code> on Services. Labels are the glue: Deployments stamp them, Services route by them.</p></div>
   </div>
-  <div class="coach" style="border-left-color:var(--red);margin-top:26px"><b>Next slide:</b> scale a Deployment up and down — watch the pod count change live in the viz.</div>
  </div>`},
 
-/* 5 — scale playground */
+/* 4: */
 {label:'CH 03 · SCALE IT',color:'var(--k8s)',hint:'Press scale or type kubectl scale. Watch pods multiply.',html:`
  <div class="inner">
   <h2 class="big">One command. <em style="background:var(--k8s)">N pods.</em></h2>
@@ -109,7 +98,7 @@ const SLIDES=[
         <span class="k">image:</span> <span class="v">nginx:1.27</span></div>
    </div>
    <div class="scaleviz">
-    <h4>Deployment web — live replica count</h4>
+    <h4>Deployment web: live replica count</h4>
     <div class="repcounter" id="rcount">3<small>replicas desired · <span id="rready">3</span> ready</small></div>
     <div class="podgrid" id="pgrid"></div>
     <div class="sclog" id="sclog">Press scale or run <code style="background:var(--ink);color:#9ec5ff;padding:1px 6px;border-radius:4px;font-size:11px">kubectl scale deployment/web --replicas=5</code></div>
@@ -121,11 +110,11 @@ const SLIDES=[
   </div>
  </div>`},
 
-/* 6 — services */
-{label:'CH 04 · SERVICES',color:'var(--green)',hint:'Press "expose service" — watch web resolve db by name.',html:`
+/* 5: */
+{label:'CH 04 · SERVICES',color:'var(--green)',hint:'Press "expose service": watch web resolve db by name.',html:`
  <div class="inner">
   <h2 class="big">Services: a <em style="background:var(--green)">stable name</em> over shifting pods</h2>
-  <p class="lede"><b>ClusterIP</b> (the default) gives your pods a DNS name inside the cluster — <code style="font-size:12px">web.default.svc.cluster.local</code> — and load-balances across healthy backends. From inside any pod, the database is just <b>db</b>.</p>
+  <p class="lede"><b>ClusterIP</b> (the default) gives your pods a DNS name inside the cluster: <code style="font-size:12px">web.default.svc.cluster.local</code>: and load-balances across healthy backends. From inside any pod, the database is just <b>db</b>.</p>
   <div class="svcwrap">
    <div class="svcbox">
     <h4>Inside the cluster</h4>
@@ -134,11 +123,11 @@ const SLIDES=[
      <div class="svcwire" id="svwire"></div>
      <div class="svcnode" id="sn-db"><div class="bx">🐘<span class="dns">db</span></div><b>postgres</b><small>1 pod · port 5432</small></div>
     </div>
-    <div class="svcnote" id="svcnote">web pod runs: <b>curl http://db:5432</b> — DNS resolves, traffic load-balances. No pod IPs in your config, ever.</div>
+    <div class="svcnote" id="svcnote">web pod runs: <b>curl http://db:5432</b>: DNS resolves, traffic load-balances. No pod IPs in your config, ever.</div>
     <div class="bgo"><button class="act kgo" id="exposebtn">▸ kubectl expose deployment db</button></div>
    </div>
    <div class="svcbox">
-    <h4>Service types — three you'll meet</h4>
+    <h4>Service types: three you'll meet</h4>
     <div class="grid3" style="margin-top:0;gap:12px">
      <div class="crate" style="padding:16px"><span class="tag" style="background:var(--green)">DEFAULT</span><h3 style="font-size:14px">ClusterIP</h3><p>Internal only. Pod → pod traffic. <b>99% of Services.</b></p></div>
      <div class="crate" style="padding:16px"><span class="tag" style="background:var(--blue)">DEV / LB</span><h3 style="font-size:14px">LoadBalancer</h3><p>Cloud provider assigns a public IP. Production ingress path.</p></div>
@@ -148,8 +137,8 @@ const SLIDES=[
   </div>
  </div>`},
 
-/* 7 — day two ops */
-{label:'CH 05 · DAY TWO',color:'var(--violet)',hint:'The three moves every engineer makes daily — in this order.',html:`
+/* 6: */
+{label:'CH 05 · DAY TWO',color:'var(--violet)',hint:'The three moves every engineer makes daily: in this order.',html:`
  <div class="inner ops">
   <h2 class="big">Something's weird? <em style="background:var(--violet)">Three moves.</em></h2>
   <p class="lede">This is 95% of real-world debugging on a cluster. Always in this order.</p>
@@ -157,25 +146,17 @@ const SLIDES=[
    <div class="crate"><span class="tag" style="background:var(--violet)">MOVE 1</span><div class="bigico">📜</div><h3>Read the logs</h3><p>Containers write to stdout. <b>Always look here first.</b> One pod crashing? Find which replica and tail it.</p><pre>kubectl logs web-7d4f8b-abc12
 kubectl logs -f deployment/web    <em># follow all</em>
 kubectl logs web-abc12 --previous  <em># last crash</em></pre></div>
-   <div class="crate"><span class="tag" style="background:var(--blue)">MOVE 2</span><div class="bigico">🔦</div><h3>Step inside</h3><p>Open a shell <b>inside</b> a running pod — its filesystem, its network namespace. Debug, then exit. Pod keeps running.</p><pre>kubectl exec -it web-abc12 -- sh
+   <div class="crate"><span class="tag" style="background:var(--blue)">MOVE 2</span><div class="bigico">🔦</div><h3>Step inside</h3><p>Open a shell <b>inside</b> a running pod: its filesystem, its network namespace. Debug, then exit. Pod keeps running.</p><pre>kubectl exec -it web-abc12 -- sh
 <em># inside:</em> curl db:5432 · env · ls
 exit</pre></div>
-   <div class="crate"><span class="tag" style="background:var(--k8s)">MOVE 3</span><div class="bigico">🔍</div><h3>Describe it</h3><p>When logs aren't enough — <b>Events</b> tell the story. OOMKilled? ImagePullBackOff? Pending forever? It's all here.</p><pre>kubectl describe pod web-abc12
+   <div class="crate"><span class="tag" style="background:var(--k8s)">MOVE 3</span><div class="bigico">🔍</div><h3>Describe it</h3><p>When logs aren't enough: <b>Events</b> tell the story. OOMKilled? ImagePullBackOff? Pending forever? It's all here.</p><pre>kubectl describe pod web-abc12
 kubectl describe deployment web
 kubectl get events --sort-by=.lastTimestamp</pre></div>
   </div>
  </div>`},
 
-/* 8 — cheat */
-{label:'CH 06 · THE 15',color:'var(--sea)',hint:'Click any command to copy. This grid is the whole job.',html:`
- <div class="inner">
-  <h2 class="big">Hundreds of flags. <em style="background:var(--sea)">Fifteen commands.</em></h2>
-  <p class="lede">Same as git and Docker. Click to copy — this grid is your daily driver.</p>
-  <div class="cheat" id="cheat"></div>
- </div>`},
-
-/* 9 — finish */
-{label:'DEPARTURE',color:'var(--green)',hint:'That was the whole model. Go run it for real.',html:`
+/* 7: */
+{label:'WRAP UP',color:'var(--green)',hint:'Pick any slide from the dots above.',html:`
  <div class="inner">
   <h1 class="mega" style="font-size:clamp(34px,6vw,72px)">You know<br><span class="hl" style="background:var(--green)">Kubernetes now.</span></h1>
   <p class="lede" style="margin-top:24px">Pods are ephemeral atoms, Deployments keep N of them alive, Services give stable names. <code style="font-size:13px">kubectl apply</code> declares desire, the control plane delivers reality, logs → exec → describe is the daily loop. <b>That's the entire working model.</b></p>
@@ -189,31 +170,30 @@ kubectl get events --sort-by=.lastTimestamp</pre></div>
 
 window.onDeckReady = function () {
 const $ = DeckEngine.$;
+const $term = DeckEngine.$term;
 const wait = DeckEngine.wait;
+function toutEl(){return $term('tout')}
+function P(t,c){const o=toutEl();if(!o)return;const d=document.createElement('div');if(c)d.className='c-'+c;d.textContent=t;o.appendChild(d);o.scrollTop=1e9;return d}
+function E(c){const o=toutEl();if(!o)return;const d=document.createElement('div');d.innerHTML='<span class="c-dim">$</span> <span class="c-cmd"></span>';d.lastElementChild.textContent=c;o.appendChild(d);o.scrollTop=1e9}
+function seedAllTouts(fn){document.querySelectorAll('.slide .tout').forEach(el=>{if(!el.dataset.seeded){el.dataset.seeded='1';fn(el)}})}
 
-/* ================= KUBECTL SIM (slide 3) ================= */
-const S={ctx:false,deployed:false,pods:[],deps:{},step:0};
+/* ================= KUBECTL SIM (workbench) ================= */
+const S={ctx:false,deployed:false,pods:[],deps:{},svcs:{},step:0};
 const sha=()=>[...Array(5)].map(()=>'0123456789abcdef'[Math.random()*16|0]).join('');
-function P(t,c){const d=document.createElement('div');if(c)d.className='c-'+c;d.textContent=t;$('tout').appendChild(d);$('tout').scrollTop=1e9;return d}
-function E(c){const d=document.createElement('div');d.innerHTML='<span class="c-dim">$</span> <span class="c-cmd"></span>';d.lastElementChild.textContent=c;$('tout').appendChild(d);$('tout').scrollTop=1e9}
 const STEPS=[
- {c:'kubectl config use-context minikube',t:'<b>Step 1 / 6</b> — point kubectl at your cluster: <code>kubectl config use-context minikube</code>. One context = one cluster.'},
- {c:'kubectl get pods',t:'<b>Step 2 / 6</b> — empty cluster check: <code>kubectl get pods</code>. Default namespace, no workloads yet.'},
- {c:'kubectl apply -f deployment.yaml',t:'<b>Step 3 / 6</b> — declare desired state: <code>kubectl apply -f deployment.yaml</code>. The control plane takes it from here.'},
- {c:'kubectl get pods -w',t:'<b>Step 4 / 6</b> — watch them boot: <code>kubectl get pods</code>. Pending → Running. See them appear in the cluster panel.'},
- {c:'kubectl get deployments',t:'<b>Step 5 / 6</b> — the boss object: <code>kubectl get deployments</code>. One line = replica count + readiness.'},
- {c:'kubectl describe deployment web',t:'<b>Step 6 / 6</b> — full story: <code>kubectl describe deployment web</code>. Events, conditions, the works.'}];
+ {c:'kubectl config use-context minikube',t:'point kubectl at your cluster: <code>kubectl config use-context minikube</code>. One context = one cluster.'},
+ {c:'kubectl get pods',t:'empty cluster check: <code>kubectl get pods</code>. Default namespace, no workloads yet.'},
+ {c:'kubectl apply -f deployment.yaml',t:'declare desired state: <code>kubectl apply -f deployment.yaml</code>. The control plane takes it from here.'},
+ {c:'kubectl get pods -w',t:'watch them boot: <code>kubectl get pods</code>. Pending → Running. See them appear in the cluster panel.'},
+ {c:'kubectl get deployments',t:'the boss object: <code>kubectl get deployments</code>. One line = replica count + readiness.'},
+ {c:'kubectl describe deployment web',t:'full story: <code>kubectl describe deployment web</code>. Events, conditions, the works.'}];
 function coach(){const el=$('coach');if(!el)return;
- el.innerHTML=S.step>=STEPS.length
-  ?'<b>All 6 done 🎉</b> — apply → get → describe is the daily loop. Free play: <code>kubectl scale deployment/web --replicas=5</code>, <code>kubectl logs web-...</code>… then hit <b>Next</b>.'
-  :STEPS[S.step].t}
+ el.innerHTML='<b>Try it.</b> Type a command, tap a chip, or hit <b>RUN</b> below. Watch the cluster panel update live.';}
 function chips(){const b=$('chips');if(!b)return;b.innerHTML='';
- const L=[];if(S.step<STEPS.length)L.push([STEPS[S.step].c,1]);
- if(S.deployed)L.push(['kubectl get pods',0],['kubectl logs web-'+sha(),0]);
- L.push(['help',0]);
- L.forEach(([c,n])=>{const x=document.createElement('button');x.className='chip'+(n?' go':'');x.textContent=c;x.onclick=()=>run(c);b.appendChild(x)})}
+ STEPS.forEach(s=>{const x=document.createElement('button');x.className='chip';x.textContent=s.c;x.onclick=()=>run(s.c);b.appendChild(x)});
+ ['help'].forEach(c=>{const x=document.createElement('button');x.className='chip';x.textContent=c;x.onclick=()=>run(c);b.appendChild(x)});}
 function drawCluster(){const cv=$('cv');if(!cv)return;
- if(!S.pods.length){cv.innerHTML='<span class="empty">No workloads yet — apply a deployment.</span>';return}
+ if(!S.pods.length){cv.innerHTML='<span class="empty">No workloads yet: apply a deployment.</span>';return}
  cv.innerHTML='<span class="nl">default namespace</span>';
  S.pods.forEach(p=>{const d=document.createElement('div');d.className='pod'+(p.st==='Pending'?' pend':p.st==='Terminating'?' dead':'');
   d.innerHTML='<span class="led"></span><div class="ico">🫛</div><b></b><small></small>';
@@ -234,17 +214,17 @@ async function spawnPods(n){S.pods=[];
  drawRes();
  for(let i=0;i<n;i++){await wait(400+Math.random()*300);S.pods[i].st='Running';drawRes()}}
 const adv=i=>{if(S.step===i){S.step++;coach();chips()}};
-async function run(raw){E(raw);if($('tin'))$('tin').value='';
+async function run(raw){E(raw);const tin=$term('tin');if(tin)tin.value='';
  const t=raw.trim().split(/\s+/);
- if(t[0]==='help')return P('get pods · get deployments · apply -f FILE · describe TYPE/NAME · logs POD · scale deployment/NAME --replicas=N · config use-context CTX · clear','cy');
- if(t[0]==='clear')return $('tout').innerHTML='';
- if(t[0]!=='kubectl')return P(t[0]+': not found — commands start with "kubectl" (or: help)','err');
+ if(t[0]==='help')return P('config use-context · get nodes · apply -f · get pods · get deployments · get services · describe · logs · exec · scale · rollout · port-forward · delete -f · clear','cy');
+ if(t[0]==='clear'){const o=toutEl();if(o)o.innerHTML='';return}
+ if(t[0]!=='kubectl')return P(t[0]+': not found: commands start with "kubectl" (or: help)','err');
  const c=t[1];
  if(c==='config'&&t[2]==='use-context'){const ctx=t[3]||'minikube';
-  if(ctx!=='minikube')return P('error: context "'+ctx+'" not found — try minikube','err');
+  if(ctx!=='minikube')return P('error: context "'+ctx+'" not found: try minikube','err');
   S.ctx=true;P('Switched to context "'+ctx+'".','ok');adv(0);return}
  if(c==='get'){
-  if(t[2]==='pods'||t[2]==='po'){if(!S.ctx)return P('The connection to the server localhost:8443 was refused — set context first.','err');
+  if(t[2]==='pods'||t[2]==='po'){if(!S.ctx)return P('The connection to the server localhost:8443 was refused: set context first.','err');
    P('NAME                    READY   STATUS    RESTARTS   AGE','cy');
    if(!S.pods.length)P('(no resources found in default namespace.)','dim');
    else S.pods.forEach(p=>P(p.name.padEnd(24)+' 1/1     '+p.st.padEnd(9)+' 0          12s'));
@@ -253,6 +233,8 @@ async function run(raw){E(raw);if($('tin'))$('tin').value='';
   if(t[2]==='deployments'||t[2]==='deploy'){if(!S.deployed)return P('(no deployments found)','dim');
    P('NAME   READY   UP-TO-DATE   AVAILABLE   AGE','cy');
    P('web    3/3     3            3           45s');adv(4);return}
+  if(t[2]==='services'||t[2]==='svc'){if(!S.svcs.web)return P('(no services found)','dim');
+   P('NAME   TYPE        CLUSTER-IP     PORT(S)','cy');P('web    ClusterIP   10.96.42.17    80/TCP');return}
   if(t[2]==='nodes'){P('NAME       STATUS   ROLES           AGE','cy');P('minikube   Ready    control-plane   7d','dim');return}
   return P('get what? try: pods · deployments · nodes','err')}
  if(c==='apply'){if(!S.ctx)return P('The connection to the server localhost:8443 was refused.','err');
@@ -260,15 +242,28 @@ async function run(raw){E(raw);if($('tin'))$('tin').value='';
    P('deployment.apps/web created','ok');S.deployed=true;S.deps.web={replicas:3,ready:0};
    drawRes();await spawnPods(3);S.deps.web.ready=3;drawRes();adv(2);return}
   return P('error: specify -f deployment.yaml','err')}
- if(c==='describe'){if(!S.deployed)return P('Error from server (NotFound): deployments.apps "web" not found','err');
+ if(c==='describe'){if(!S.deployed)return P('Error from server (NotFound): resource not found','err');
+  if(t[2]==='pod'||t[2]==='po'){const name=t[3]||'web';
+   P('Name:         '+name,'cy');P('Namespace:    default','dim');P('Status:       Running','ok');P('Events:  Normal  Started  kubelet  Started container','dim');return}
   P('Name:         web','cy');P('Namespace:    default','dim');
   P('Replicas:     3 desired | 3 updated | 3 total | 3 available','dim');
   P('StrategyType: RollingUpdate','dim');P('Events:','cy');
   P('  Normal  ScalingReplicaSet  deployment-controller  Scaled up replica set to 3','ok');
   P('  Normal  Available          deployment-controller  Deployment has minimum availability','ok');adv(5);return}
- if(c==='logs'){const pod=t[2]||'web';if(!S.pods.length)return P('error: no pods to log from','err');
+ if(c==='delete'){if(t.includes('-f')&&t.includes('manifest.yaml')){S.deployed=false;S.pods=[];S.deps={};S.svcs={};drawRes();P('deployment.apps "web" deleted','ok');return}
+  return P('error: specify -f manifest.yaml','err')}
+ if(c==='logs'){const pod=t[2]==='-f'?t[3]:t[2];if(t.includes('-f')&&t[2]==='deployment'){pod='web';}
+  if(!S.pods.length)return P('error: no pods to log from','err');
+  if(t.includes('-f'))P('(following log stream…)','dim');
   P('/docker-entrypoint.sh: Configuration complete; ready for start up','dim');
   P('2026/08/30 12:00:00 [notice] nginx/1.27.0 started','dim');return}
+ if(c==='exec'){const pod=t.filter(x=>!x.startsWith('-')).slice(1)[0]||'web';
+  if(!S.pods.length)return P('error: pod not found','err');
+  P('# shell inside '+pod,'ok');P('/ # ls\nbin  etc  usr  var','dim');P('/ # exit','dim');return}
+ if(c==='rollout'){if(t[2]==='status'){P('deployment "web" successfully rolled out','ok');return}
+  if(t[2]==='undo'){P('deployment.apps/web rolled back','ok');return}
+  return P('rollout status · rollout undo deployment/NAME','cy')}
+ if(c==='port-forward'){P('Forwarding from 127.0.0.1:8080 -> 80','ok');P('(simulated: hit Ctrl+C to stop)','dim');return}
  if(c==='scale'){if(!S.deployed)return P('error: deployment "web" not found','err');
   let rep=null;
   for(const x of t){if(x.startsWith('--replicas='))rep=parseInt(x.split('=')[1],10);
@@ -277,9 +272,10 @@ async function run(raw){E(raw);if($('tin'))$('tin').value='';
   P('deployment.apps/web scaled','ok');S.deps.web.replicas=rep;
   const cur=S.pods.length;if(rep>cur){for(let i=cur;i<rep;i++)S.pods.push({name:'web-7d4f8b-'+sha(),st:'Running'})}
   else S.pods=S.pods.slice(0,rep);S.deps.web.ready=rep;drawRes();return}
- P("kubectl: '"+c+"' — not in this simulator. Try: help",'err')}
-document.addEventListener('keydown',e=>{if(e.target.id==='tin'&&e.key==='Enter'&&e.target.value.trim())run(e.target.value)});
-P('☸ Simulated cluster. Type freely — nothing can break.','cy');P('');
+ if(c==='apply'&&raw.includes('service.yaml')){S.svcs.web=1;P('service/web created','ok');return}
+ P("kubectl: '"+c+"': not in this simulator. Try: help",'err')}
+document.addEventListener('keydown',e=>{if(e.target.matches('.tinrow input')&&e.key==='Enter'&&e.target.value.trim())run(e.target.value)});
+seedAllTouts(el=>{[{t:'☸ Simulated cluster. Type freely: nothing can break.',c:'cy'},{t:'',c:''}].forEach(({t,c})=>{const d=document.createElement('div');if(c)d.className='c-'+c;d.textContent=t;el.appendChild(d)})});
 drawRes();coach();
 
 /* ================= SCALE SIM (slide 5) ================= */
@@ -297,7 +293,7 @@ async function doScale(n,msg){if(scaling)return;scaling=1;
  const old=replicas;replicas=n;$('rephl').textContent=n;
  if(n>old){for(let i=old;i<n;i++){await wait(350);drawScale()}}
  else{drawScale()}
- const ok=document.createElement('div');ok.className='ok';ok.textContent='deployment.apps/web scaled — '+n+'/'+n+' ready ✓';g.appendChild(ok);
+ const ok=document.createElement('div');ok.className='ok';ok.textContent='deployment.apps/web scaled: '+n+'/'+n+' ready ✓';g.appendChild(ok);
  scaling=0}
 drawScale();
 $('scalebtn').onclick=()=>doScale(5,'Scaling deployment/web to 5 replicas…\nPod web-'+sha()+' created\nPod web-'+sha()+' created');
@@ -308,32 +304,28 @@ let svcOn=0;
 $('exposebtn').onclick=async()=>{if(svcOn)return;svcOn=1;
  $('sn-web').classList.add('on');await wait(500);
  $('sn-db').classList.add('on');$('svwire').classList.add('on');
- $('svcnote').innerHTML='<span class="ok">Service "db" exposed on ClusterIP 10.96.42.17:5432</span><br>web pod runs: <b>curl http://db:5432</b> — DNS resolves, traffic load-balances. No pod IPs in your config, ever.';
+ $('svcnote').innerHTML='<span class="ok">Service "db" exposed on ClusterIP 10.96.42.17:5432</span><br>web pod runs: <b>curl http://db:5432</b>: DNS resolves, traffic load-balances. No pod IPs in your config, ever.';
  $('exposebtn').textContent='✓ service live';$('exposebtn').disabled=true};
 $('sn-web').classList.add('on');
 
-/* ================= CHEAT (slide 8) ================= */
+/* ================= CHEAT (workbench) ================= */
 const CHEAT=[
- ['kubectl get pods','see every pod in this namespace'],
- ['kubectl get deployments','replica counts at a glance'],
- ['kubectl get services','ClusterIPs and ports'],
- ['kubectl apply -f manifest.yaml','declare desired state'],
- ['kubectl delete -f manifest.yaml','tear it all down'],
- ['kubectl describe pod NAME','events + why it is stuck'],
- ['kubectl logs POD','read stdout — first debug move'],
- ['kubectl logs -f deployment/NAME','follow live output'],
- ['kubectl exec -it POD -- sh','shell inside a running pod'],
- ['kubectl scale deployment/NAME --replicas=N','instant horizontal scale'],
- ['kubectl rollout status deployment/NAME','watch a rolling update'],
- ['kubectl rollout undo deployment/NAME','revert to previous revision'],
- ['kubectl port-forward svc/NAME 8080:80','reach a service locally'],
- ['kubectl get nodes','is the cluster healthy?'],
- ['kubectl config use-context NAME','switch clusters']];
-CHEAT.forEach(([c,w])=>{const b=document.createElement('button');b.className='cc';
- b.innerHTML='<div><code></code><small>'+w+'</small></div><span class="cp">COPY</span>';
- b.querySelector('code').textContent=c;
- b.onclick=()=>{if(navigator.clipboard)navigator.clipboard.writeText(c);b.classList.add('copied');b.querySelector('.cp').textContent='✓';toast('Copied — '+c);setTimeout(()=>{b.classList.remove('copied');b.querySelector('.cp').textContent='COPY'},1500)};
- $('cheat').appendChild(b)});
+ ['kubectl config use-context minikube','1 · point at your cluster'],
+ ['kubectl get nodes','2 · is the cluster healthy?'],
+ ['kubectl apply -f deployment.yaml','3 · declare desired state'],
+ ['kubectl get pods','4 · see every pod'],
+ ['kubectl get deployments','5 · replica counts at a glance'],
+ ['kubectl get services','6 · ClusterIPs and ports'],
+ ['kubectl describe pod web','7 · events + why it is stuck'],
+ ['kubectl logs web','8 · read stdout (first debug move)'],
+ ['kubectl logs -f deployment/web','9 · follow live output'],
+ ['kubectl exec -it web -- sh','10 · shell inside a running pod'],
+ ['kubectl scale deployment/web --replicas=3','11 · horizontal scale'],
+ ['kubectl rollout status deployment/web','12 · watch a rolling update'],
+ ['kubectl port-forward svc/web 8080:80','13 · reach a service locally'],
+ ['kubectl rollout undo deployment/web','14 · revert bad deploy'],
+ ['kubectl delete -f manifest.yaml','15 · tear it all down']];
+SimCheats.bind($('cheat'),CHEAT,run);
 
 };
 

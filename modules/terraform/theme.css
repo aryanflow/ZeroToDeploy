@@ -80,3 +80,10 @@
 }
 .ops .crate pre { color: #c79bff; }
 .ops .crate pre em { color: #6a6180; }
+
+.codewrap { margin-top: 22px; }
+.hclpre {
+  margin: 0; border: none; border-radius: 0;
+  white-space: pre; overflow-x: auto;
+}
+.hclpre .cm { color: #5b5273; font-style: italic; }

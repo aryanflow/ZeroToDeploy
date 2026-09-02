@@ -127,3 +127,27 @@
 .simlog { font-family: var(--mono); font-size: 11px; color: var(--sub); min-height: 50px; line-height: 1.6; }
 .ops .crate pre { color: #c76a00; }
 .ops .crate pre em { color: #6a6180; }
+
+/* NAT & ALB architecture viz */
+.natviz, .albviz { background: #FFF9F0; }
+.natdivider {
+  height: 2px; background: repeating-linear-gradient(90deg, var(--ink) 0 8px, transparent 8px 16px);
+  margin: 18px 0; opacity: .25;
+}
+.archnode.user { background: var(--yellow); }
+.archnode.igwnode { background: #E8F0FF; }
+.archnode.pubnode { background: #E7F6EA; }
+.archnode.privnode { background: #E8F0FF; }
+.archnode.natnode { background: #FFF4E5; border-color: var(--aws); }
+.archnode.extnode { background: #f0f0f0; }
+.archnode.albnode { background: var(--green); color: #fff; }
+.archnode.albnode small { color: rgba(255,255,255,.75); }
+.archnode.tgnode { background: var(--aws); color: var(--ink); }
+.archnode.ec2node { background: #E7F6EA; min-width: 110px; }
+.archnode.ec2node.off { background: #f5f5f5; opacity: .55; text-decoration: line-through; }
+.archstack { display: flex; flex-direction: column; gap: 8px; }
+@media (max-width: 800px) {
+  .archrow { flex-direction: column; }
+  .archarr { transform: rotate(90deg); }
+  .archstack { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+}

@@ -99,3 +99,30 @@
 @keyframes crawl { to { background-position: 18px 0; } }
 .clog { font-family: var(--mono); font-size: 11.5px; color: var(--sub); min-height: 66px; line-height: 1.7; }
 .clog .ok { color: var(--green); font-weight: 700; }
+
+.darkstrip.tagstrip {
+  margin-top: 22px; background: var(--ink); color: #efe9e4; border-radius: 14px;
+  padding: 16px 22px; display: flex; gap: 8px 28px; flex-wrap: wrap; align-items: center;
+  box-shadow: 6px 6px 0 rgba(22, 19, 17, .25);
+}
+.darkstrip.tagstrip .t { font-family: var(--mono); font-size: 10px; letter-spacing: .24em; color: var(--yellow); flex: 0 0 100%; text-transform: uppercase; }
+.darkstrip.tagstrip span { font-family: var(--mono); font-size: 12.5px; color: #b3a89f; }
+.darkstrip.tagstrip span b { color: #fff; font-weight: 500; }
+.darkstrip.tagstrip span i { color: var(--yellow); font-style: normal; margin: 0 7px; }
+
+.tagviz {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px;
+  margin-top: 24px; padding: 18px 20px;
+  border: 2.5px solid var(--ink); border-radius: 14px; background: #fff;
+  box-shadow: 6px 6px 0 var(--ink); font-family: var(--mono);
+}
+.tagpart { padding: 8px 12px; border-radius: 8px; border: 2px solid var(--ink); font-size: 12px; font-weight: 700; box-shadow: 2px 2px 0 var(--ink); }
+.tagpart.hub { background: #EDE7FF; }
+.tagpart.repo { background: #E8F4FD; }
+.tagpart.ver { background: var(--yellow); }
+.tagslash, .tagcolon { font-size: 18px; font-weight: 700; color: var(--sub); }
+.tagctx { flex: 1 1 100%; margin-top: 8px; font-size: 11.5px; color: var(--sub); }
+.tagctx b { color: var(--ink); }
+
+.inner.ops .crate pre { margin-top: 12px; background: #101820; border-radius: 10px; padding: 12px 14px; font-size: 11.5px; line-height: 1.8; color: #6fd3ff; overflow-x: auto; }
+.inner.ops .crate pre em { color: #61748a; font-style: normal; }

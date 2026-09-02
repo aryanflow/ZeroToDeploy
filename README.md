@@ -1,67 +1,66 @@
 # ZeroToDeploy
 
-Interactive DevOps tutorials you **learn by clicking** — not by scrolling.
-
-Each module is a self-contained slide deck with simulated terminals. Zero cloud spend. Open `index.html` and pick a deck.
+Interactive DevOps tutorials: **run commands, watch the system change.** Simulated terminals and live panels. Nothing touches production.
 
 <p align="center">
   <img src="docs/screenshot.png" alt="ZeroToDeploy landing page" width="900">
 </p>
 
-## Project structure
+## How it works
 
-```
-ZeroToDeploy/
-├── index.html              # Landing hub
-├── assets/
-│   ├── brand/              # logo.svg, favicon.svg
-│   ├── css/                # hub.css, deck-base.css
-│   └── js/                 # modules.js, hub.js, deck-engine.js
-├── modules/
-│   ├── git/                # CHECKPOINT
-│   ├── docker/             # DOCKYARD
-│   ├── terraform/          # GROUNDWORK
-│   ├── kubernetes/         # BRIDGE
-│   ├── aws/                # HORIZON
-│   └── cicd/               # CONVEYOR
-└── docs/screenshot.png
-```
+1. **Hub** — optional demo: try `git status` in 5 seconds
+2. **Concept slides** — mental model first (THE IDEA, THE LOOP)
+3. **Workbench** — terminal + visual panel + daily commands on one screen
+4. **Go deeper** — branches, Dockerfile, VPC, etc. Use dots to jump; add `?workbench` to skip ahead
 
-## Live modules
+## Modules
 
-| Codename | Topic | Path | Time |
-|----------|-------|------|------|
-| **CHECKPOINT** | Git & GitHub | [`modules/git/index.html`](modules/git/index.html) | ~15 min · 10 slides |
-| **DOCKYARD** | Docker | [`modules/docker/index.html`](modules/docker/index.html) | ~15 min · 10 slides |
-| **GROUNDWORK** | Terraform | [`modules/terraform/index.html`](modules/terraform/index.html) | ~15 min · 10 slides |
-| **BRIDGE** | Kubernetes | [`modules/kubernetes/index.html`](modules/kubernetes/index.html) | ~15 min · 10 slides |
-| **HORIZON** | AWS Core | [`modules/aws/index.html`](modules/aws/index.html) | ~15 min · 10 slides |
-| **CONVEYOR** | CI/CD | [`modules/cicd/index.html`](modules/cicd/index.html) | ~15 min · 10 slides |
+| Module | Slides | Time |
+|--------|--------|------|
+| [**Git**](modules/git/index.html) | 8 | ~16 min |
+| [**Docker**](modules/docker/index.html) | 8 | ~18 min |
+| [**Terraform**](modules/terraform/index.html) | 8 | ~18 min |
+| [**Kubernetes**](modules/kubernetes/index.html) | 8 | ~18 min |
+| [**AWS Core**](modules/aws/index.html) | 8 | ~20 min |
+| [**CI/CD**](modules/cicd/index.html) | 8 | ~18 min |
 
-## Recommended path
+**All modules:** ~108 min · 48 slides · $0 cloud spend
 
-Git → Docker → Terraform → Kubernetes → AWS → CI/CD → Deploy
+## What's in the workbench
+
+- **Terminal** — type commands or tap chips; output is simulated but consistent
+- **Visual panel** — files zones (Git), containers (Docker), cluster (K8s), resources (AWS/Terraform), runs (CI/CD)
+- **Daily commands** — 12–15 commands in typical use order; each row has **RUN**
+- **Concept slides** — mental models when you want them; not required first
 
 ## Quick start
 
 ```bash
 open index.html
-
-# or serve locally (recommended — links work reliably)
+# or
 python3 -m http.server 8080
-# visit http://localhost:8080
+# → http://localhost:8080
 ```
 
-Module links point to `index.html` explicitly so they work when opening files directly (`file://`) without a web server.
+Links open at **THE IDEA**. Add `?workbench` to jump straight to practice.
 
-## Add a new module
+## Project structure
 
-1. Copy `modules/docker/` to `modules/your-topic/`.
-2. Edit `slides.js`, `theme.css`, and set `--accent` in theme.
-3. Add an entry to [`assets/js/modules.js`](assets/js/modules.js) with `path: 'modules/your-topic/index.html'`.
+```
+ZeroToDeploy/
+├── index.html          # hub + demo terminal
+├── assets/             # deck-engine, hub-terminal, brand
+└── modules/
+    ├── git/
+    ├── docker/
+    ├── terraform/
+    ├── kubernetes/
+    ├── aws/
+    └── cicd/
+```
 
 ## Philosophy
 
-- **One folder per topic** — shared engine, unique slides
+- **Concepts, then practice** — two slides of mental model, then the workbench
 - **Simulated, not real** — nothing breaks, nothing bills
-- **Mental models first** — leave with the working model, not a certificate
+- **Standalone topics** — pick any module; no required order
